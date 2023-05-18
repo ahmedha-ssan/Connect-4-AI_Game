@@ -6,10 +6,10 @@ class MinMax:
         self.depth = depth
 
     def get_move(self, board):
-        value, move = self.minimax(board, self.depth, -np.inf, np.inf, True)
+        value, move = self.minimax(board, self.depth, True)
         return move
 
-    def minimax(self, board, depth, alpha, beta, maximizing_player):
+    def minimax(self, board, depth, maximizing_player):
         if depth == 0 or board.game_over:
             return self.evaluate(board), None
 
@@ -17,19 +17,16 @@ class MinMax:
             value = -np.inf
             best_move = None
             for col in range(7):
-                if board.board[0][col] == 0 or board.board[0][col] == None:
+                if board.board[0][col] == 0:
                     board_copy = Board()
                     board_copy.board = np.copy(board.board)
                     board_copy.game_over = board.game_over
                     board_copy.turn = board.turn
                     board_copy.play(col)
-                    new_value, _ = self.minimax(board_copy, depth-1, alpha, beta, False)
+                    new_value, _ = self.minimax(board_copy, depth-1, False)
                     if new_value > value:
                         value = new_value
                         best_move = col
-                    alpha = max(alpha, value)
-                    if alpha >= beta:
-                        break
             return value, best_move
         else:
             value = np.inf
@@ -41,13 +38,10 @@ class MinMax:
                     board_copy.game_over = board.game_over
                     board_copy.turn = board.turn
                     board_copy.play(col)
-                    new_value, _ = self.minimax(board_copy, depth-1, alpha, beta, True)
+                    new_value, _ = self.minimax(board_copy, depth-1, True)
                     if new_value < value:
                         value = new_value
                         best_move = col
-                    beta = min(beta, value)
-                    if alpha >= beta:
-                        break
             return value, best_move
 
     def evaluate(self, board):
