@@ -10,17 +10,15 @@ import numpy as np
 
 
 
-def main():
-    choose = int(input("if you want min max choose 1 if you want to choose alpha beta choose 2 "))
-    choose1 = int(input("1 easy 2 medium 3 hard "))
+def main(a,b):
     board = Board()
-    if choose1 ==1:
+    if b ==1:
         minmax=MinMax(depth=4)
         alphabeta =AlphaBeta(depth=4)
-    elif choose1 ==2:
+    elif b ==2:
         minmax=MinMax(depth=5)
         alphabeta =AlphaBeta(depth=5)
-    elif choose1 ==3:
+    elif b ==3:
         minmax=MinMax(depth=6)
         alphabeta =AlphaBeta(depth=6)
 
@@ -33,7 +31,7 @@ def main():
         # FOR DEBUG PURPOSES
         board.print_grid(game_board)
 
-        if(choose==1):
+        if(a==1):
             col=minmax.get_move(board)
         else:
             col=alphabeta.get_move(board)
